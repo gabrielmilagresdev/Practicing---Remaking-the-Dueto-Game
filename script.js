@@ -1,5 +1,5 @@
 let palavraEsq = "TERMO";
-let palavraDir = "NILCE";
+let palavraDir = "DUETO";
 let linhaAtual = 0;
 let colunaAtual = 0;
 let jogoAtivo = true;
