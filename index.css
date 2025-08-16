@@ -1,0 +1,151 @@
+body {
+  background-color: #6e5c62;
+  font-family: sans-serif;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+}
+#header {
+  display: flex;
+  align-items: center;
+}
+#titulo {
+  font-family: "Arial Black";
+  justify-content: center;
+  margin-left: 46%;
+}
+#ajuda {
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+  background-color: #4c4347;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Arial Black";
+  justify-content: right;
+  margin-left: 40%;
+}
+#jogo-container {
+  display: flex;
+  gap: 200px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.tela {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tela h2 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.grade {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.linha {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.letra {
+  width: 35px;
+  height: 35px;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  border: 5px solid #4c4347;
+  border-radius: 10px;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  caret-color: transparent;
+  cursor: pointer;
+  color: white;
+  font-family: "Arial Black";
+}
+.letra:focus {
+  outline: none;
+  border-bottom: 10px solid #4c4347;
+}
+
+.letra.espera {
+  background-color: #615458;
+  border-color: #615458;
+}
+
+.letra.correta {
+  background-color: #6aaa64;
+  color: white;
+  border-color: #6aaa64;
+  animation: flip 0.5s forwards;
+}
+.letra.presente {
+  background-color: #c9b458;
+  color: white;
+  border-color: #c9b458;
+  animation: flip 0.5s forwards;
+}
+.letra.ausente {
+  background-color: #787c7e;
+  color: white;
+  border-color: #787c7e;
+  animation: flip 0.5s forwards;
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateX(0deg);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+#teclado-do-jogo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.teclado {
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  background-color: #4c4347;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Arial Black";
+}
+.backspace,
+.enter {
+  font-size: 1.5rem;
+  background-color: #4c4347;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0 16px;
+  font-family: "Arial Black";
+}
+
+.escurecida {
+  background-color: #3a3236 !important;
+  border-color: #3a3236 !important;
+}
