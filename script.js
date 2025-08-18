@@ -1,10 +1,12 @@
-let palavraEsq = "TERMO";
-let palavraDir = "NILCE";
+let palavraEsq = "PETSI";
+let palavraDir = "TERMO";
 let linhaAtual = 0;
 let colunaAtual = 0;
 let jogoAtivo = true;
 let jogoAtivoEsq = true;
 let jogoAtivoDir = true;
+let contVitoria = 0;
+let contDerrota = 0;
 const linhasEsq = document.querySelectorAll("#tela-esq .linha");
 const linhasDir = document.querySelectorAll("#tela-dir .linha");
 const teclas = document.querySelectorAll(".teclado");
@@ -135,12 +137,14 @@ function enviar() {
   if (acertouEsq) {
     jogoAtivoEsq = false;
     escurecerRestantes(linhasEsq, linhaAtual + 1);
+    contVitoria++;
   }
   if (acertouDir) {
     jogoAtivoDir = false;
     escurecerRestantes(linhasDir, linhaAtual + 1);
+    contVitoria++;
   }
-
+  if (contVitoria == 2) alert("VOCÊ VENCEU");
   linhaAtual++;
   colunaAtual = 0;
 
@@ -165,6 +169,11 @@ function enviar() {
   } else {
     jogoAtivo = false;
   }
+  contDerrota++;
+  if (contDerrota == 7 && contVitoria != 2)
+    alert(
+      `VOCÊ PERDEU\nAS PALAVRAS ERAM:\nESQUERDA: ${palavraEsq}\nDIREITA: ${palavraDir}`
+    );
 }
 
 teclas.forEach((btn) => {

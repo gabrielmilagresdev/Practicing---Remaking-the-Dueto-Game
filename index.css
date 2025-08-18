@@ -1,11 +1,14 @@
 body {
-  background-color: #6e5c62;
+  background-color: #500000;
   font-family: sans-serif;
 }
 
 h1 {
-  color: white;
+  color: #ffffff;
   text-align: center;
+}
+h2 {
+  color: #ffffff;
 }
 #header {
   display: flex;
@@ -20,7 +23,7 @@ h1 {
   width: 40px;
   height: 40px;
   font-size: 1rem;
-  background-color: #4c4347;
+  background-color: #977a06;
   color: white;
   border: none;
   border-radius: 5px;
@@ -33,7 +36,6 @@ h1 {
   display: flex;
   gap: 200px;
   justify-content: center;
-  margin-top: 20px;
 }
 
 .tela {
@@ -66,7 +68,7 @@ h1 {
   font-weight: bold;
   text-transform: uppercase;
   text-align: center;
-  border: 5px solid #4c4347;
+  border: 5px solid #ffffff;
   border-radius: 10px;
   background-color: transparent;
   transition: all 0.3s ease;
@@ -77,12 +79,12 @@ h1 {
 }
 .letra:focus {
   outline: none;
-  border-bottom: 10px solid #4c4347;
+  border-bottom: 10px solid #ffffff;
 }
 
 .letra.espera {
-  background-color: #615458;
-  border-color: #615458;
+  background-color: #969393;
+  border-color: #969393;
 }
 
 .letra.correta {
@@ -98,9 +100,9 @@ h1 {
   animation: flip 0.5s forwards;
 }
 .letra.ausente {
-  background-color: #787c7e;
+  background-color: #969393;
   color: white;
-  border-color: #787c7e;
+  border-color: #969393;
   animation: flip 0.5s forwards;
 }
 
@@ -115,29 +117,69 @@ h1 {
     transform: rotateX(0deg);
   }
 }
+#container-teclado {
+  display: flex;
+  align-items: center;
+}
 
 #teclado-do-jogo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 40px;
+  margin-left: 16%;
 }
 
 .teclado {
   width: 50px;
   height: 50px;
   font-size: 1.5rem;
-  background-color: #4c4347;
+  background-color: #977a06;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-family: "Arial Black";
 }
+.tutorial-certo {
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  background-color: #6aaa64;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Arial Black";
+  margin-right: 1%;
+}
+.tutorial-errado {
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  background-color: #c9b458;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Arial Black";
+  margin-right: 1%;
+}
+.tutorial-neutro {
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  background-color: #ffffff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Arial Black";
+  margin-right: 1%;
+}
 .backspace,
 .enter {
   font-size: 1.5rem;
-  background-color: #4c4347;
+  background-color: #977a06;
   color: white;
   border: none;
   border-radius: 5px;
@@ -146,6 +188,9 @@ h1 {
 }
 
 .escurecida {
-  background-color: #3a3236 !important;
-  border-color: #3a3236 !important;
+  background-color: #977a06 !important;
+  border-color: #977a06 !important;
+}
+#img-petsi {
+  margin-left: 15%;
 }
