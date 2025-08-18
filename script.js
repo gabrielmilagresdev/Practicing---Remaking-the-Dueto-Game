@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 let palavraEsq = "PETSI";
 let palavraDir = "TERMO";
+=======
+let palavraEsq = "TERMO";
+let palavraDir = "DUETO";
+>>>>>>> b2c173afb2045761abf0854827a4e368d8132516
 let linhaAtual = 0;
 let colunaAtual = 0;
 let jogoAtivo = true;
