@@ -41,36 +41,77 @@ function focarCelula() {
     linhasEsq[linhaAtual].querySelectorAll(".letra")[colunaAtual] || null;
   if (input && !input.disabled) input.focus();
 }
-
+function eliminarLetra(letraEliminadaVetor, lado, estado) {
+  let letraEliminada = document.getElementById(letraEliminadaVetor);
+  if (lado == "dir") {
+    if (estado == "correta") {
+      letraEliminada.style.borderRightColor = "green";
+      letraEliminada.style.borderRightWidth = "5px";
+      return null;
+    }
+    if (estado == "presente") {
+      letraEliminada.style.borderRightColor = "yellow";
+      letraEliminada.style.borderRightWidth = "5px";
+      return null;
+    }
+    if (estado == "ausente") {
+      letraEliminada.style.borderRightColor = "red";
+      letraEliminada.style.borderRightWidth = "5px";
+      return null;
+    }
+  } else if (lado == "esq") {
+    if (estado == "correta") {
+      letraEliminada.style.borderLeftColor = "green";
+      letraEliminada.style.borderLeftWidth = "5px";
+      return null;
+    }
+    if (estado == "presente") {
+      letraEliminada.style.borderLeftColor = "yellow";
+      letraEliminada.style.borderLeftWidth = "5px";
+      return null;
+    }
+    if (estado == "ausente") {
+      letraEliminada.style.borderLeftColor = "red";
+      letraEliminada.style.borderLeftWidth = "5px";
+      return null;
+    }
+  }
+}
 function inserirLetra(letra) {
-  if (!jogoAtivo) return;
+  if (!jogoAtivoEsq && !jogoAtivoDir) return; // trava só se os dois acabaram
   if (colunaAtual >= 5) return;
+
   letra = letra.toUpperCase();
   const inputsE = linhasEsq[linhaAtual].querySelectorAll(".letra");
   const inputsD = linhasDir[linhaAtual].querySelectorAll(".letra");
-  if (!inputsE[colunaAtual].disabled) {
+
+  if (jogoAtivoEsq && !inputsE[colunaAtual].disabled) {
     inputsE[colunaAtual].value = letra;
   }
-  if (!inputsD[colunaAtual].disabled) {
+  if (jogoAtivoDir && !inputsD[colunaAtual].disabled) {
     inputsD[colunaAtual].value = letra;
   }
+
   colunaAtual++;
   if (colunaAtual > 4) colunaAtual = 5;
   focarCelula();
 }
 
 function apagarLetra() {
-  if (!jogoAtivo) return;
+  if (!jogoAtivoEsq && !jogoAtivoDir) return;
   if (colunaAtual === 0) return;
+
   colunaAtual--;
   const inputsE = linhasEsq[linhaAtual].querySelectorAll(".letra");
   const inputsD = linhasDir[linhaAtual].querySelectorAll(".letra");
-  if (!inputsE[colunaAtual].disabled) {
+
+  if (jogoAtivoEsq && !inputsE[colunaAtual].disabled) {
     inputsE[colunaAtual].value = "";
   }
-  if (!inputsD[colunaAtual].disabled) {
+  if (jogoAtivoDir && !inputsD[colunaAtual].disabled) {
     inputsD[colunaAtual].value = "";
   }
+
   focarCelula();
 }
 
@@ -83,7 +124,7 @@ function contarLetras(palavra) {
   return cont;
 }
 
-function avaliarLinha(inputs, segredo) {
+function avaliarLinhaEsq(inputs, segredo) {
   const tentativa = Array.from(inputs)
     .map((i) => i.value.toUpperCase())
     .join("");
@@ -93,6 +134,7 @@ function avaliarLinha(inputs, segredo) {
     const letra = tentativa[i];
     if (letra === segredo[i]) {
       status[i] = "correta";
+      eliminarLetra(letra, "esq", "correta");
       cont[letra]--;
     }
   }
@@ -101,9 +143,44 @@ function avaliarLinha(inputs, segredo) {
       const letra = tentativa[i];
       if (cont[letra] > 0) {
         status[i] = "presente";
+        eliminarLetra(letra, "esq", "presente");
         cont[letra]--;
       } else {
         status[i] = "ausente";
+        eliminarLetra(letra, "esq", "ausente");
+      }
+    }
+  }
+  for (let i = 0; i < 5; i++) {
+    inputs[i].classList.add(status[i]);
+    inputs[i].disabled = true;
+  }
+  return tentativa === segredo;
+}
+function avaliarLinhaDir(inputs, segredo) {
+  const tentativa = Array.from(inputs)
+    .map((i) => i.value.toUpperCase())
+    .join("");
+  const cont = contarLetras(segredo);
+  const status = new Array(5).fill("");
+  for (let i = 0; i < 5; i++) {
+    const letra = tentativa[i];
+    if (letra === segredo[i]) {
+      status[i] = "correta";
+      eliminarLetra(letra, "dir", "correta");
+      cont[letra]--;
+    }
+  }
+  for (let i = 0; i < 5; i++) {
+    if (status[i] === "") {
+      const letra = tentativa[i];
+      if (cont[letra] > 0) {
+        status[i] = "presente";
+        eliminarLetra(letra, "dir", "presente");
+        cont[letra]--;
+      } else {
+        status[i] = "ausente";
+        eliminarLetra(letra, "dir", "ausente");
       }
     }
   }
@@ -132,13 +209,18 @@ function bloquearTela(telaLinhas) {
 }
 
 function enviar() {
-  if (!jogoAtivo) return;
+  if (!jogoAtivoEsq && !jogoAtivoDir) return;
   if (colunaAtual !== 5) return;
+
   const inputsE = linhasEsq[linhaAtual].querySelectorAll(".letra");
   const inputsD = linhasDir[linhaAtual].querySelectorAll(".letra");
 
-  const acertouEsq = avaliarLinha(inputsE, palavraEsq);
-  const acertouDir = avaliarLinha(inputsD, palavraDir);
+  const acertouEsq = jogoAtivoEsq
+    ? avaliarLinhaEsq(inputsE, palavraEsq)
+    : false;
+  const acertouDir = jogoAtivoDir
+    ? avaliarLinhaDir(inputsD, palavraDir)
+    : false;
 
   if (acertouEsq) {
     jogoAtivoEsq = false;
@@ -152,7 +234,9 @@ function enviar() {
     contVitoria++;
     contDerrotaDir = 0;
   }
+
   if (contVitoria == 2) alert("VOCÊ VENCEU");
+
   linhaAtual++;
   colunaAtual = 0;
 
@@ -175,8 +259,10 @@ function enviar() {
 
     focarCelula();
   } else {
-    jogoAtivo = false;
+    jogoAtivoEsq = false;
+    jogoAtivoDir = false;
   }
+
   contDerrota++;
   if (contDerrota == 7 && contVitoria != 2) {
     alert("VOCÊ PERDEU\n");
@@ -188,6 +274,7 @@ function enviar() {
     }
   }
 }
+
 function pedirAjuda() {
   contAjuda--;
   if (contAjuda == 2) {
@@ -221,7 +308,7 @@ botaoBack.addEventListener("click", () => apagarLetra());
 botaoEnter.addEventListener("click", () => enviar());
 botaoAjuda.addEventListener("click", () => pedirAjuda());
 document.addEventListener("keydown", (e) => {
-  if (!jogoAtivo) return;
+  if (!jogoAtivoEsq && !jogoAtivoDir) return;
   const k = e.key;
   if (/^[a-zA-Z]$/.test(k)) {
     e.preventDefault();

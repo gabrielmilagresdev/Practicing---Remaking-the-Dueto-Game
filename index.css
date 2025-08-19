@@ -10,6 +10,9 @@ h1 {
 h2 {
   color: #ffffff;
 }
+h4 {
+  color: #ffffff;
+}
 #header {
   display: flex;
   align-items: center;
@@ -17,7 +20,7 @@ h2 {
 #titulo {
   font-family: "Arial Black";
   justify-content: center;
-  margin-left: 46%;
+  margin-left: 5%;
 }
 #ajuda {
   width: 40px;
@@ -135,7 +138,7 @@ h2 {
   font-size: 1.5rem;
   background-color: #977a06;
   color: white;
-  border: none;
+  border-color: #997a06;
   border-radius: 5px;
   cursor: pointer;
   font-family: "Arial Black";
@@ -194,3 +197,17 @@ h2 {
 #img-petsi {
   margin-left: 15%;
 }
+/*
+#Q,
+#W,
+#E,
+#R,
+#T,
+#Y,
+#U,
+#I,
+#O,
+#P {
+  
+}
+*/
