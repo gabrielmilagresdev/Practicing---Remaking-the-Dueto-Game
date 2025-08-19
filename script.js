@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 let palavraEsq = "PETSI";
+const palavraEsqAjuda = palavraEsq.split("");
 let palavraDir = "TERMO";
-=======
-let palavraEsq = "TERMO";
-let palavraDir = "DUETO";
->>>>>>> b2c173afb2045761abf0854827a4e368d8132516
+const palavraDirAjuda = palavraDir.split("");
 let linhaAtual = 0;
 let colunaAtual = 0;
 let jogoAtivo = true;
@@ -12,11 +9,15 @@ let jogoAtivoEsq = true;
 let jogoAtivoDir = true;
 let contVitoria = 0;
 let contDerrota = 0;
+let contDerrotaDir = 1;
+let contDerrotaEsq = 1;
+let contAjuda = 5;
 const linhasEsq = document.querySelectorAll("#tela-esq .linha");
 const linhasDir = document.querySelectorAll("#tela-dir .linha");
 const teclas = document.querySelectorAll(".teclado");
 const botaoEnter = document.querySelector(".enter");
 const botaoBack = document.querySelector(".backspace");
+const botaoAjuda = document.querySelector("#ajuda");
 
 function iniciarLinhas() {
   for (let i = 0; i < linhasEsq.length; i++) {
@@ -143,11 +144,13 @@ function enviar() {
     jogoAtivoEsq = false;
     escurecerRestantes(linhasEsq, linhaAtual + 1);
     contVitoria++;
+    contDerrotaEsq = 0;
   }
   if (acertouDir) {
     jogoAtivoDir = false;
     escurecerRestantes(linhasDir, linhaAtual + 1);
     contVitoria++;
+    contDerrotaDir = 0;
   }
   if (contVitoria == 2) alert("VOCÊ VENCEU");
   linhaAtual++;
@@ -175,10 +178,37 @@ function enviar() {
     jogoAtivo = false;
   }
   contDerrota++;
-  if (contDerrota == 7 && contVitoria != 2)
+  if (contDerrota == 7 && contVitoria != 2) {
+    alert("VOCÊ PERDEU\n");
+    if (contDerrotaDir == 1) {
+      alert(`PALAVRA DA DIREITA: ${palavraDir}\n`);
+    }
+    if (contDerrotaEsq == 1) {
+      alert(`PALAVRA DA ESQUERDA: ${palavraEsq}`);
+    }
+  }
+}
+function pedirAjuda() {
+  contAjuda--;
+  if (contAjuda == 2) {
+    alert("APERTE MAIS UMA VEZ PARA DESISTIR");
+    return null;
+  }
+  if (contAjuda <= 1) {
+    jogoAtivoEsq = false;
+    escurecerRestantes(linhasEsq, linhaAtual);
+    jogoAtivoDir = false;
+    escurecerRestantes(linhasDir, linhaAtual);
     alert(
-      `VOCÊ PERDEU\nAS PALAVRAS ERAM:\nESQUERDA: ${palavraEsq}\nDIREITA: ${palavraDir}`
+      `A RESPOSTA É:\nPALAVRA DA ESQUERDA: ${palavraEsq}\nPALAVRA DA DIREITA: ${palavraDir}`
     );
+    return null;
+  }
+  alert(
+    `A ${contAjuda + 1}º LETRA DAS PALAVRAS É: \nESQUERDA: ${
+      palavraEsqAjuda[contAjuda]
+    }\nDIREITA: ${palavraDirAjuda[contAjuda]}`
+  );
 }
 
 teclas.forEach((btn) => {
@@ -189,6 +219,7 @@ teclas.forEach((btn) => {
 });
 botaoBack.addEventListener("click", () => apagarLetra());
 botaoEnter.addEventListener("click", () => enviar());
+botaoAjuda.addEventListener("click", () => pedirAjuda());
 document.addEventListener("keydown", (e) => {
   if (!jogoAtivo) return;
   const k = e.key;
